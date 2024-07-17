@@ -2,6 +2,7 @@
 """Cache class"""
 import redis
 import uuid
+import json
 from typing import Union, Callable, Optional
 from functools import wraps
 
