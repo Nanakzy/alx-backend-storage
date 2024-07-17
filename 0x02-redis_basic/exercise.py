@@ -42,10 +42,10 @@ def replay(method: Callable) -> None:
     outputs = r.lrange(output_key, 0, -1)
     print(f"{method_qualname} was called {len(inputs)} times:")
     for inp, out in zip(inputs, outputs):
-        inp_str = json.loads(inp.decode('utf-8'))
-        out_str = json.loads(out.decode('utf-8'))
+        inp_str = inp.decode('utf-8')
+        out_str = out.decode('utf-8')
         # Print input parameters as a tuple and output
-        print(f"{method_qualname}(*{inp_str}) -> {out_str}")
+        print(f"{method_qualname}(*{json.loads(inp_str)}) -> {out_str}")
 
 
 class Cache:
