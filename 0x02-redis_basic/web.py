@@ -20,7 +20,6 @@ def data_cacher(method: Callable) -> Callable:
         if result:
             return result.decode('utf-8')
         result = method(url)
-        redis_store.set(f'count:{url}', 0)
         redis_store.setex(f'result:{url}', 10, result)
         return result
     return invoker
@@ -30,4 +29,9 @@ def data_cacher(method: Callable) -> Callable:
 def get_page(url: str) -> str:
     """Return the content of a URL after caching the request's response,
     and tracking request"""
-    return requests.get(url).text
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text
+    except requests.RequestException as e:
+        return f"Error: {e}"
