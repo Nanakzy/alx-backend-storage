@@ -24,10 +24,10 @@ def call_history(method: Callable) -> Callable:
         input_key = f"{method.__qualname__}:inputs"
         output_key = f"{method.__qualname__}:outputs"
         # Store the input parameters as a JSON string
-        self._redis.rpush(input_key, json.dumps(args))
+        self._redis.rpush(input_key, str(args))
         output = method(self, *args, **kwargs)
         # Store the output as a JSON string
-        self._redis.rpush(output_key, json.dumps(output))
+        self._redis.rpush(output_key, str(output))
         return output
     return wrapper
 
