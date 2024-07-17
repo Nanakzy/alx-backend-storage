@@ -8,6 +8,7 @@ from functools import wraps
 
 
 def count_calls(method: Callable) -> Callable:
+    """Decorator to count the number of calls to a method."""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         key = method.__qualname__
@@ -17,6 +18,7 @@ def count_calls(method: Callable) -> Callable:
 
 
 def call_history(method: Callable) -> Callable:
+    """Decorator to store the history of inputs and outputs for a method."""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         input_key = f"{method.__qualname__}:inputs"
